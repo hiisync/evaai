@@ -23,7 +23,7 @@ cargo run
 How It Works:
 The bot uses an AI model to generate philosophical reflections based on a set of predefined prompts. It selects a random prompt and sends the AI-generated message to the specified Telegram channel. The bot waits for a random period (between 30 minutes and 2 hours) before sending the next message.
 
-###Contributing: Feel free to fork the repository, make changes, and submit pull requests. Contributions are welcome!
+### Contributing: Feel free to fork the repository, make changes, and submit pull requests. Contributions are welcome!
 
-License:
+### License:
 This project is licensed under the MIT License – see the LICENSE file for details.
