@@ -32,7 +32,7 @@ struct CandidateContent {
 }
 
 impl ContentRequest {
-    // Метод для створення об'єкта запиту
+    // Method for creating a request object
     pub async fn new(text: &str) -> Self {
         ContentRequest {
             contents: vec![Content {
@@ -43,7 +43,7 @@ impl ContentRequest {
         }
     }
 
-    // Метод для надсилання запиту
+    // Method for sending the request
     pub async fn send_request(&self, api_key: &str) -> Result<String, Box<dyn std::error::Error>> {
         let url = format!(
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={}",
@@ -53,21 +53,21 @@ impl ContentRequest {
         let client = Client::new();
         let response = client
             .post(&url)
-            .json(self) // Серіалізація об'єкта запиту
+            .json(self) // Serialize the request object
             .send()
             .await?;
 
-        // Десеріалізація JSON-відповіді
+        // Deserialize the JSON response
         let response_json: ApiResponse = response.json().await?;
 
-        // Отримуємо текст з першого кандидата та першої частини
+        // Extract text from the first candidate and the first part
         if let Some(candidate) = response_json.candidates.get(0) {
             if let Some(part) = candidate.content.parts.get(0) {
                 return Ok(part.text.clone());
             }
         }
 
-        // Якщо відповіді немає, повертаємо помилку
+        // If no response, return an error
         Err(Box::new(std::io::Error::new(
             std::io::ErrorKind::NotFound,
             "No response found",

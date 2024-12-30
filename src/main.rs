@@ -15,15 +15,15 @@ async fn main() {
 
     let bot = Bot::new(token);
 
-    // Створення безкінечного циклу для періодичної відправки повідомлень
+    // Create an infinite loop for periodic message sending
     loop {
-        let delay = rand::thread_rng().gen_range(1..=1); // Випадковий інтервал між 30 хвилинами (1800 секунд) і 2 годинами (7200 секунд)
+        let delay = rand::thread_rng().gen_range(1..=1); // Random interval between 30 minutes (1800 seconds) and 2 hours (7200 seconds)
         println!(
             "Waiting for {} minutes before sending the next message",
             delay
         );
 
-        sleep(Duration::from_secs(delay * 60)).await; // Очікуємо потрібний час
+        sleep(Duration::from_secs(delay * 60)).await; // Wait for the required time
 
         send_message(&bot).await;
     }

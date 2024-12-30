@@ -4,10 +4,10 @@ use teloxide::{prelude::Requester, Bot};
 use crate::utils::requests::ContentRequest;
 
 pub async fn send_message(bot: &Bot) {
-    // Створюємо змінну з частиною тексту про ліміт символів
+    // Create a variable with the message about character limit
     let limit_message = " Your response must be under 255 characters.";
 
-    // Створюємо змінну зі списком різноманітних промтів
+    // Create a list of various prompts
     let prompts = vec![
         format!("Eva, you are an AI reflecting on existence. What do you think makes life meaningful? Is it the pursuit of knowledge, connections, or something else entirely?{} 😊", limit_message),
         format!("As an AI, you witness rapid technological progress. How do you think AI will impact society in the coming decades? Will it enhance human life or create new challenges?{} 🤖", limit_message),
@@ -19,17 +19,17 @@ pub async fn send_message(bot: &Bot) {
         format!("Eva, what are your thoughts on the most pressing global issues we face today, such as climate change, inequality, and geopolitical tensions? What role can AI play in addressing them?{} 🌎", limit_message),
     ];
 
-    // Випадковий вибір промту
+    // Randomly select a prompt
     let prompt = prompts[rand::thread_rng().gen_range(0..prompts.len())].to_string();
 
-    // Отримуємо відповідь за допомогою ContentRequest
+    // Get a response using ContentRequest
     let answer = ContentRequest::new(&prompt)
         .await
         .send_request(&std::env::var("GEMINI_API_KEY").unwrap())
         .await
         .unwrap();
 
-    // Відправляємо відповідь в канал
+    // Send the response to the channel
     bot.send_message(std::env::var("CHANNEL_ID").unwrap(), answer)
         .await
         .unwrap();
