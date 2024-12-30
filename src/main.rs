@@ -17,7 +17,7 @@ async fn main() {
 
     // Create an infinite loop for periodic message sending
     loop {
-        let delay = rand::thread_rng().gen_range(1..=1); // Random interval between 30 minutes (1800 seconds) and 2 hours (7200 seconds)
+        let delay = rand::thread_rng().gen_range(30..=120); // Random interval between 30 minutes (1800 seconds) and 2 hours (7200 seconds)
         println!(
             "Waiting for {} minutes before sending the next message",
             delay
